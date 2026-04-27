@@ -103,7 +103,7 @@ async function callAPI(usr){
       method:"POST",
       headers:{"Content-Type":"application/json"},
       signal:controller.signal,
-      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:sys,messages:[{role:"user",content:usr}]})
+      body:JSON.stringify({model:"claude-3-5-sonnet-20241022",max_tokens:1000,system:sys,messages:[{role:"user",content:usr}]})
     });
     clearTimeout(timeout);
     const d=await r.json();
@@ -374,7 +374,8 @@ NÍVEL ${d.nivel}: ${NIVEIS[d.nivel]}`;
     );
   }
 
-  if(phase==="result"&&calc){
+  if(phase==="result"){
+    if(!calc)return(<div style={S.page}><div style={S.card}><div style={{textAlign:"center",color:DG,fontSize:18,padding:40}}>Carregando resultado... ✨</div></div></div>);
     const domMeta=DEUSA_META[calc.dominante]||{};
     return(
       <div style={{...S.page,paddingTop:0}} className="print-area">
@@ -431,5 +432,5 @@ NÍVEL ${d.nivel}: ${NIVEIS[d.nivel]}`;
     );
   }
 
-  return null;
+  return(<div style={S.page}><div style={S.card}><div style={{textAlign:"center",color:DG,fontSize:18,padding:40}}>Carregando...</div></div></div>);
 }
